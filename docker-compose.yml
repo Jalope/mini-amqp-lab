@@ -1,0 +1,25 @@
+#Contenedores que conforman el proyecto
+services:
+  artemis:
+    # Cada contenedor que se define debe tener especificado de dónde coger la imagen para crearlo y su nombre
+    image: apache/artemis:latest-alpine
+    container_name: mini-amqp-artemis
+
+    environment:
+    # Desde el archivo .env coge las credenciales necesarias
+      ARTEMIS_USER: ${ARTEMIS_USER}
+      ARTEMIS_PASSWORD: ${ARTEMIS_PASSWORD}
+      ANONYMOUS_LOGIN: "false"
+
+    ports:
+    # Puerto principal de mensajería
+      - "61616:61616"
+    # Consola web de administración
+      - "8161:8161"
+
+    volumes:
+    # Crea un volumen persistente
+      - artemis-data:/var/lib/artemis-instance
+
+volumes:
+  artemis-data:
