@@ -21,5 +21,23 @@ services:
     # Crea un volumen persistente
       - artemis-data:/var/lib/artemis-instance
 
+  consumer:
+    build:
+      context: ./consumer
+
+    environment:
+      AMQP_HOST: artemis
+      AMQP_PORT: 61616
+      AMQP_USER: ${ARTEMIS_USER}
+      AMQP_PASSWORD: ${ARTEMIS_PASSWORD}
+      AMQP_QUEUE: tracks.distribution::client-a.tracks
+    
+    depends_on:
+      - artemis
+
+    # Evita que el consumidor se ejecute automaticamente cada vez que se levanta el contenedor con: <docker compose up -d>. Queremos lanzarlo manualmente para pruebas
+    profiles:
+      - tools
+
 volumes:
   artemis-data:
