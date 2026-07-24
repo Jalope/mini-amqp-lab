@@ -38,6 +38,24 @@ services:
     # Evita que el consumidor se ejecute automaticamente cada vez que se levanta el contenedor con: <docker compose up -d>. Queremos lanzarlo manualmente para pruebas
     profiles:
       - tools
+  
+  producer:
+    build:
+      context: ./producer
+
+    environment:
+      AMQP_HOST: artemis
+      AMQP_PORT: 61616
+      AMQP_USER: ${ARTEMIS_USER}
+      AMQP_PASSWORD: ${ARTEMIS_PASSWORD}
+      # En este caso no ponemos una queue si no que apuntamos directamente al address.
+      AMQP_ADDRESS: tracks.distribution
+    
+    depends_on:
+      - artemis
+
+    profiles:
+      - tools
 
 volumes:
   artemis-data:
