@@ -59,13 +59,24 @@ class TrackProducer(MessagingHandler):
         #     "flightLevel": 280,
         #     "timestamp": datetime.now(timezone.utc).isoformat(),
         # }
+        # track = {
+        #    "messageId": "track-0003",
+        #    "trackOrigin": "CAN",
+        #    "trackNumber": 9012,
+        #    "callsign": "RYR9012",
+        #    "flightLevel": 350,
+        #    "timestamp": datetime.now(timezone.utc).isoformat(),
+        #}
+
+        now = datetime.now(timezone.utc)
+
         track = {
-            "messageId": "track-0003",
+            "messageId": f"track-{now.strftime('%Y%m%d%H%M%S%f')}",
             "trackOrigin": "CAN",
             "trackNumber": 9012,
             "callsign": "RYR9012",
             "flightLevel": 350,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": now.isoformat(),
         }
 
         message = Message(
