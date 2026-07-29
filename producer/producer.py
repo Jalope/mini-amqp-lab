@@ -51,12 +51,20 @@ class TrackProducer(MessagingHandler):
         if self.sent:
             return
 
+        # track = {
+        #     "messageId": "track-0002",
+        #     "trackOrigin": "BCN",
+        #     "trackNumber": 5678,
+        #     "callsign": "VLG5678",
+        #     "flightLevel": 280,
+        #     "timestamp": datetime.now(timezone.utc).isoformat(),
+        # }
         track = {
-            "messageId": "track-0002",
-            "trackOrigin": "BCN",
-            "trackNumber": 5678,
-            "callsign": "VLG5678",
-            "flightLevel": 280,
+            "messageId": "track-0003",
+            "trackOrigin": "CAN",
+            "trackNumber": 9012,
+            "callsign": "RYR9012",
+            "flightLevel": 350,
             "timestamp": datetime.now(timezone.utc).isoformat(),
         }
 
