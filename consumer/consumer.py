@@ -20,7 +20,10 @@ class TrackConsumer(MessagingHandler):
         password: str,
         queue: str,
     ) -> None:
-        super().__init__(auto_accept=True)
+        # auto_accept=True hace que el consumidor acepte automáticamente loos mensajes recibidos.
+        # super().__init__(auto_accept=True)
+        # auto_accept=False hace que el consumidor no acepte automáticamente los mensajes recibidos. Esto permite al consumidor decidir cuándo aceptar un mensaje.
+        super().__init__(auto_accept=False)
 
         self.host = host
         self.port = port
@@ -65,7 +68,26 @@ class TrackConsumer(MessagingHandler):
         else:
             print(body)
 
-        print("\nMensaje procesado. Cerrando el consumidor.")
+    # Aceptación manual del mensaje
+        self.accept(event.delivery)
+
+        print("\nMensaje aceptado manualmente.")
+        print("Mensaje procesado. Cerrando el consumidor.")
+
+    # Release
+        # print(f"\nIntentos de entrega previos: {event.message.delivery_count}")
+
+        # self.release(event.delivery)
+
+        # print("Mensaje liberado: volverá a estar disponible en la cola.")
+        # print("Cerrando el consumidor sin confirmar el procesamiento.") 
+    
+    # Reject
+        # self.reject(event.delivery)
+
+        # print("\nMensaje rechazado manualmente.")
+        # print("El mensaje no debe volver a quedar disponible en esta cola.")
+        # print("Cerrando el consumidor.")
 
         event.receiver.close()
         event.connection.close()
